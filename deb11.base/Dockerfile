@@ -1,5 +1,9 @@
-FROM
+FROM debian:bullseye-slim
 
-RUN
+RUN apt update; \
+    apt full-upgrade -y; \
+    apt install -y htop nano dnsutils net-tools; \
+    apt autoremove; \
+    apt clean;
 
-CMD
+CMD ["-c","/bin/bash"]
