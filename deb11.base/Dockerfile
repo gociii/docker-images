@@ -6,4 +6,4 @@ RUN apt update; \
     apt autoremove; \
     apt clean;
 
-CMD ["-c","/bin/bash"]
+CMD ["/bin/bash"]
