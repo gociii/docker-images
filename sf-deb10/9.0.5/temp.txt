@@ -1,0 +1,41 @@
+
+apt update;
+apt install -y curl ca-certificates systemd-sysv;
+
+bash -c "$(curl -sSfL 'https://raw.githubusercontent.com/MichaIng/DietPi/master/.build/images/dietpi-installer')"
+
+
+
+apt install wget ca-certificates awscli fuse systemd-sysv systemctl --no-install-recommends -y
+
+wget https://go.dev/dl/go1.18.2.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.2.linux-amd64.tar.gz
+
+export GOPATH=/usr/local/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+
+wget https://github.com/kahing/goofys/releases/latest/download/goofys
+install goofys /usr/local/bin/
+
+---------------------------
+
+docker run --privileged --platform linux/amd64
+
+---------------------------
+
+# create mount point
+mkdir ${HOME}/foo
+# mount bucket foo to ${HOME}/foo
+goofys --endpoint="https://eu2.contabostorage.com" sf-fs /mnt/fs
+
+alias aws='aws --endpoint-url $S3_URL'
+
+echo -e "[default]\naws_access_key_id = XXX\naws_secret_access_key = YYY" > ~/.aws/credentials
+
+# adding an fstab entry to mount the bucket automatically at boot time
+# credentials must be present in /root/.aws/credentials
+sudo mkdir /mnt/foo
+echo 'goofys#foo /mnt/foo fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777,--endpoint=eu2.storagedomain.com 0 0' | sudo tee -a /etc/fstab
+
+---------------------------
