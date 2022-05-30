@@ -17,7 +17,15 @@ RUN apt update; \
     apt update; apt full-upgrade -y; \    
     apt autoremove; apt clean;
 
-CMD mkdir ~/.aws -p; echo -e "[default]\naws_access_key_id = $AWS_ACCESS_KEY_ID\naws_secret_access_key = $AWS_SECRET_ACCESS_KEY" > ~/.aws/credentials
+CMD mkdir ~/.aws/credentials -p; echo -e "[default]\naws_access_key_id = $AWS_ACCESS_KEY_ID\naws_secret_access_key = $AWS_SECRET_ACCESS_KEY" > ~/.aws/credentials
+
+CMD mkdir /mnt/sf-blocks; mkdir /mnt/sf-fs; mkdir /mnt/sf-commits
+
+CMD goofys -o allow_other --endpoint $S3_URL $S3_BUCKETNAME_FS $MNT_BUCKET_FS
+
+CMD goofys -o allow_other --endpoint $S3_URL $S3_BUCKETNAME_FS $MNT_BUCKET_FS
+
+CMD goofys -o allow_other --endpoint $S3_URL $S3_BUCKETNAME_FS $MNT_BUCKET_FS
 
 COPY entrypoint.sh /opt/mssql/entrypoint.sh
 
