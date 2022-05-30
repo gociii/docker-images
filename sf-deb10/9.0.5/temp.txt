@@ -38,4 +38,6 @@ echo -e "[default]\naws_access_key_id = XXX\naws_secret_access_key = YYY" > ~/.a
 sudo mkdir /mnt/foo
 echo 'goofys#foo /mnt/foo fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777,--endpoint=eu2.storagedomain.com 0 0' | sudo tee -a /etc/fstab
 
+https://www.gemalta.com/products/25-1700?_pos=2&_sid=0f678e6fa&_ss=r
+
 ---------------------------
